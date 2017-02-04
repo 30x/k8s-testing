@@ -66,7 +66,31 @@ export KUBE_CONFIG_FILE=<your config file>
     - Calls `source PROVIDER_UTILS` (actually calling `cluster/gce/util.sh`)
         - Calls `source cluster/gce/${KUBE_CONFIG_FILE}"` or `source cluster/gce/config-default.sh` if the former isn't present.
             - Call `source cluster/gce/config-common.sh`
-                - t
+                - Calls `get-master-size` which returns the suggest size of the master node
+                - Sets `${NODE_SCOPES}` based on if `${FEDERATION}` is `true`.
+            - Sets a large number of environment variables. Best to refer directly to `cluster/gce/config-default.sh` for reference.
+        - Calls `source cluster/common.sh`
+            - Sets `DEFAULT_KUBECONFIG` to existing `${HOME}/.kube/config`
+            - Calls `source cluster/lib/util.sh`
+                - Creates `function kube::utio::wait-for-jobs()`
+                - Creates `function kube::util::join`
+                - Provides some colors
+            - Calls `source cluster/lib/logging.sh`
+                - Creates functions relevant to logging
+            - Creates functions to interact with `kubeconfig` file
+            - Creates functions to interact with kubernetes binaries
+            - Creates function to generate environment variable configuration
+        - Calls `source cluster/lib/util.sh`
+            - Creates `function kube::utio::wait-for-jobs()`
+            - Creates `function kube::util::join`
+            - Provides some colors
+        - Calls `source cluster/gce/${NODE_OS_DISTRIBUTION}/node-helper.sh`
+            - placeholder
+        - Calls `source cluster/gce/${MASTER_OS_DISTRIBUTION}/master-helper.sh`
+            - placeholder
+        - Sets several environemnt variables.
+        - Creates the majority of the used functions.
+
 
 
 # Notes
